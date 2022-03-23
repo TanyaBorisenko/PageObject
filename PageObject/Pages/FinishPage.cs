@@ -2,7 +2,7 @@
 
 namespace PageObject.Pages
 {
-    public class FinishPage : BasePage
+    public class FinishPage : BasePage<FinishPage>
     {
         private readonly By _backButton = By.Id("back-to-products");
         private readonly By _completeHeader = By.ClassName("complete-header");
@@ -11,12 +11,12 @@ namespace PageObject.Pages
         {
         }
 
-        public override BasePage WaitForPageOpened()
+        public override FinishPage WaitForPageOpened()
         {
             return this;
         }
 
-        public override BasePage OpenPage()
+        public override FinishPage OpenPage()
         {
             Driver.FindElement(_completeHeader);
             return this;

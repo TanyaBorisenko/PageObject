@@ -5,10 +5,10 @@ using PageObject.Pages;
 
 namespace PageObject.Tests
 {
-    public class BaseTest
+    public abstract class BaseTest
     {
         private WebDriver _driver;
-        public string UserName = "standard_user";
+        protected string UserName = "standard_user";
         public string Password = "secret_sauce";
         public CartMenu CartMenu;
         public CheckoutPage CheckoutPage;
@@ -23,6 +23,8 @@ namespace PageObject.Tests
         public void BeforeTest()
         {
             _driver = new ChromeDriver();
+            _driver.Manage().Window.Maximize();
+            
             CartMenu = new CartMenu(_driver);
             CheckoutPage = new CheckoutPage(_driver);
             FinishPage = new FinishPage(_driver);
@@ -33,16 +35,12 @@ namespace PageObject.Tests
             OverviewPage = new OverviewPage(_driver);
         }
 
-        [Test]
-        public void Test()
-        {
-            _driver.Manage().Window.Maximize();
-        }
-
         [TearDown]
         public void TearDown()
         {
             _driver.Quit();
         }
+        
+        // tanya govnokoder, ia pzdc bydy rjat esli ona etogo ne zametit
     }
 }

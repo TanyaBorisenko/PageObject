@@ -2,7 +2,7 @@
 
 namespace PageObject.Pages
 {
-    public class MenuButton : BasePage
+    public class MenuButton : BasePage<MenuButton>
     {
         private readonly By _menuList = By.ClassName("bm-item-list");
         private readonly By _logoutButton = By.XPath("//*[contains(text() , 'Logout')]");
@@ -12,12 +12,12 @@ namespace PageObject.Pages
         {
         }
 
-        public override BasePage WaitForPageOpened()
+        public override MenuButton WaitForPageOpened()
         {
             return this;
         }
 
-        public override BasePage OpenPage()
+        public override MenuButton OpenPage()
         {
             Driver.FindElement(_menuList);
             return this;
