@@ -3,9 +3,9 @@ using OpenQA.Selenium;
 
 namespace PageObject.Pages
 {
-    public class CheckoutPage : BasePage
+    public class CheckoutPage : BasePage<CheckoutPage>
     {
-        private readonly By _cancelButton = By.ClassName("btn btn_secondary back btn_medium cart_cancel_link");
+        private readonly By _cancelButton = By.CssSelector(".btn btn_secondary back.btn_medium cart_cancel_link");
         private readonly By _continueButton = By.Id("continue");
         private readonly By _firstNameInfo = By.Id("first-name");
         private readonly By _lastNameInfo = By.Id("last-name");
@@ -15,7 +15,7 @@ namespace PageObject.Pages
         {
         }
 
-        public override BasePage WaitForPageOpened()
+        public override CheckoutPage WaitForPageOpened()
         {
             try
             {
@@ -29,7 +29,7 @@ namespace PageObject.Pages
             return this;
         }
 
-        public override BasePage OpenPage()
+        public override CheckoutPage OpenPage()
         {
             Driver.Navigate().GoToUrl(Url + "/checkout-step-one.html");
             WaitForPageOpened();

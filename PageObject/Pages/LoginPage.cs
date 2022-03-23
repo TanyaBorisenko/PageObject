@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 
 namespace PageObject.Pages
 {
-    public class LoginPage : BasePage
+    public class LoginPage : BasePage<LoginPage>
     {
         private readonly By _usernameField = By.Id("user-name");
         private readonly By _passwordField = By.Id("password");
@@ -14,11 +14,11 @@ namespace PageObject.Pages
         {
         }
 
-        public override BasePage WaitForPageOpened()
+        public override LoginPage WaitForPageOpened()
         {
             try
             {
-                Wait.Until(d => d.FindElement(By.Id("login-button")));
+                Wait.Until(d => d.FindElement(_singInButton));
             }
             catch (TimeoutException e)
             {
@@ -28,7 +28,7 @@ namespace PageObject.Pages
             return this;
         }
 
-        public override BasePage OpenPage()
+        public override LoginPage OpenPage()
         {
             Driver.Navigate().GoToUrl(Url);
             WaitForPageOpened();

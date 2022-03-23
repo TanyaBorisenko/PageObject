@@ -4,7 +4,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace PageObject.Pages
 {
-    public abstract class BasePage
+    public abstract class BasePage<T>
     {
         protected readonly string Url = "https://www.saucedemo.com/";
         protected readonly IWebDriver Driver;
@@ -16,8 +16,8 @@ namespace PageObject.Pages
             Wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
-        public abstract BasePage WaitForPageOpened();
+        public abstract T WaitForPageOpened();
 
-        public abstract BasePage OpenPage();
+        public abstract T OpenPage();
     }
 }

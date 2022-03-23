@@ -4,18 +4,47 @@ namespace PageObject.Tests
 {
     public class CartTest : BaseTest
     {
-        //Add product into the cart
         [Test]
-        public void AddProductIntoTheCart()
+        public void AddProductIntoTheCart_IconCartShouldShowAddedProduct_OnTheProductPage()
         {
-            ProductsPage.AddProduct("Sauce Labs Backpack");
+            // // Open Sauce Demo Login Page
+            // LoginPage.OpenPage();
+            //
+            // // Login
+            // LoginPage.ClickSingInButton(UserName, Password);
+            //
+            // // I am in Product Page
+            // ProductsPage.WaitForPageOpened();
+            //
+            // // Add product
+            // ProductsPage.AddProduct("Sauce Labs Backpack");
+            //
+            // // Get amount from cart badge
+            // var amount = ProductsPage.GetCartBadgeAmount();
+
+           var amount = LoginPage
+                .OpenPage()
+                .ClickSingInButton(UserName, Password)
+                .WaitForPageOpened()
+                .AddProduct("Sauce Labs Backpack")
+                .GetCartBadgeAmount();
+
+           Assert.AreEqual(1, amount);
         }
 
         //Remove product from the cart
         [Test]
-        public void RemoveProductFromCart()
+        public void RemoveProductFromCart_IconCartShouldNotShowAddedProduct_OnTheProductPage()
         {
-            ProductsPage.RemoveProduct("Sauce Labs Backpack");
+            var amount = LoginPage
+                .OpenPage()
+                .ClickSingInButton(UserName, Password)
+                .WaitForPageOpened()
+                .AddProduct("Sauce Labs Backpack")
+                .RemoveProduct("Sauce Labs Backpack")
+                .GetCartBadgeAmount();
+
+            Assert.AreEqual(0, amount);
         }
 
         //Click "Continue" button

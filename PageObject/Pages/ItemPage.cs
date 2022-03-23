@@ -2,7 +2,7 @@
 
 namespace PageObject.Pages
 {
-    public class ItemPage : BasePage
+    public class ItemPage : BasePage<ItemPage>
 
     {
         private readonly By _backButton = By.Id("back-to-products");
@@ -12,12 +12,12 @@ namespace PageObject.Pages
         {
         }
 
-        public override BasePage WaitForPageOpened()
+        public override ItemPage WaitForPageOpened()
         {
             return this;
         }
 
-        public override BasePage OpenPage()
+        public override ItemPage OpenPage()
         {
             return this;
         }

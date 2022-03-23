@@ -5,25 +5,26 @@ using OpenQA.Selenium;
 
 namespace PageObject.Pages
 {
-    public class ProductsPage : BasePage
+    public class ProductsPage : BasePage<ProductsPage>
     {
         private readonly By _menuButton = By.Id("react-burger-menu-btn");
         private readonly By _cartButton = By.Id("shopping_cart_container");
         private readonly By _sortContainer = By.CssSelector("[class = 'product_sort_container']");
-        string _addToCartButton = "//*[@class='inventory_item']//*[text()='Add to cart']";
-        string _removeButton = "//*[@class='inventory_item']//*[text()='Remove']";
+        private readonly string _addToCartButton = "//*[@class='inventory_item']//*[text()='Add to cart']";
+        private readonly string _removeButton = "//*[@class='inventory_item']//*[text()='Remove']";
         private readonly By _nameProduct = By.CssSelector("[class = 'inventory_item_name']");
         private readonly By _productDescription = By.CssSelector("[class = 'inventory_item_desc']");
         string _productImg = "//div[@class ='inventory_item_img']";
         private readonly By _twitterButton = By.ClassName("social_twitter");
         private readonly By _facebookButton = By.ClassName("social_facebook");
         private readonly By _linkedinButton = By.ClassName("social_linkedin");
+        private readonly By _cartBadgeIcon = By.ClassName("shopping_cart_badge");
 
         public ProductsPage(IWebDriver driver) : base(driver)
         {
         }
 
-        public override BasePage WaitForPageOpened()
+        public override ProductsPage WaitForPageOpened()
         {
             try
             {
@@ -37,24 +38,30 @@ namespace PageObject.Pages
             return this;
         }
 
-        public override BasePage OpenPage()
+        public override ProductsPage OpenPage()
         {
             Driver.Navigate().GoToUrl(Url + "/inventory.html");
             WaitForPageOpened();
             return this;
         }
 
-        public CartMenu AddProduct(string product)
+        public ProductsPage AddProduct(string product)
         {
             Driver.FindElement(By.XPath(string.Format(_addToCartButton, product))).Click();
-            return new CartMenu(Driver);
+            return this;
         }
 
-        public CartMenu RemoveProduct(string product)
+        public ProductsPage RemoveProduct(string product)
+        {
+            Driver.FindElement(By.XPath(string.Format(_removeButton, product))).Click();
+            return this;
+        }
+
+        public ProductsPage AddThenRemoveProduct(string product)
         {
             AddProduct(product);
-            Driver.FindElement(By.XPath(string.Format(_removeButton, product))).Click();
-            return new CartMenu(Driver);
+            RemoveProduct(product);
+            return this;
         }
 
         public ItemPage ClickOnImg(string productName)
@@ -85,6 +92,12 @@ namespace PageObject.Pages
         {
             Driver.FindElement(_linkedinButton).Click();
             return this;
+        }
+
+        public int GetCartBadgeAmount()
+        {
+            var amount = Driver.FindElement(_cartBadgeIcon).Text;
+            return int.Parse(amount);
         }
 
         public bool DescriptionIsDisplayed()

@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 
 namespace PageObject.Pages
 {
-    public class OverviewPage : BasePage
+    public class OverviewPage : BasePage<OverviewPage>
     {
         private readonly By _finishButton = By.CssSelector("[class = 'btn btn_action btn_medium cart_button']");
         private readonly By _complete = By.Id("checkout_summary_container");
@@ -12,7 +12,7 @@ namespace PageObject.Pages
         {
         }
 
-        public override BasePage WaitForPageOpened()
+        public override OverviewPage WaitForPageOpened()
         {
             try
             {
@@ -26,7 +26,7 @@ namespace PageObject.Pages
             return this;
         }
 
-        public override BasePage OpenPage()
+        public override OverviewPage OpenPage()
         {
             Driver.Navigate().GoToUrl(Url + "/checkout-step-two.html");
             WaitForPageOpened();
