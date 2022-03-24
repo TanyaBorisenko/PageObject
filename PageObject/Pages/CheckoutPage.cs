@@ -21,9 +21,9 @@ namespace PageObject.Pages
             {
                 Wait.Until(d => d.FindElement(By.XPath("//*[@class = 'title']")));
             }
-            catch (TimeoutException e)
+            catch (WebDriverTimeoutException e)
             {
-                throw new Exception(e.Message);
+                throw new WebDriverTimeoutException($"Page {nameof(CheckoutPage)} is not opened. Message : {e.Message}");
             }
 
             return this;
@@ -36,13 +36,31 @@ namespace PageObject.Pages
             return this;
         }
 
-        public CheckoutPage InsertData(string firstName, string lastname, string zipCode)
+        public override bool IsPageOpened()
+        {
+            {
+                bool isOpened;
+                try
+                {
+                    Wait.Until(d => d.FindElement(By.XPath("//*[@class = 'title']")));
+                    isOpened = true;
+                }
+                catch (WebDriverTimeoutException e)
+                {
+                    isOpened = false;
+                }
+
+                return isOpened;
+            }
+        }
+
+        public OverviewPage InsertData(string firstName, string lastname, string zipCode)
         {
             Driver.FindElement(_firstNameInfo).SendKeys(firstName);
             Driver.FindElement(_lastNameInfo).SendKeys(lastname);
             Driver.FindElement(_postalCodeInfo).SendKeys(zipCode);
             Driver.FindElement(_continueButton).Click();
-            return this;
+            return new OverviewPage(Driver);
         }
 
         public CartMenu CancelButton()

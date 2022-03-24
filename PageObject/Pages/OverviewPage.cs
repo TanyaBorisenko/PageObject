@@ -18,9 +18,9 @@ namespace PageObject.Pages
             {
                 Wait.Until(d => d.FindElement(_finishButton));
             }
-            catch (TimeoutException e)
+            catch (WebDriverTimeoutException e)
             {
-                throw new Exception(e.Message);
+                throw new WebDriverTimeoutException($"Page {nameof(OverviewPage)} is not opened. Message : {e.Message}");
             }
 
             return this;
@@ -31,6 +31,24 @@ namespace PageObject.Pages
             Driver.Navigate().GoToUrl(Url + "/checkout-step-two.html");
             WaitForPageOpened();
             return this;
+        }
+
+        public override bool IsPageOpened()
+        {
+            {
+                bool isOpened;
+                try
+                {
+                    Wait.Until(d => d.FindElement(_finishButton));
+                    isOpened = true;
+                }
+                catch (WebDriverTimeoutException e)
+                {
+                    isOpened = false;
+                }
+
+                return isOpened;
+            }
         }
 
         public FinishPage ClickFinishButton()

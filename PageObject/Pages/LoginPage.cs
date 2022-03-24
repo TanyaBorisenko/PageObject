@@ -20,9 +20,9 @@ namespace PageObject.Pages
             {
                 Wait.Until(d => d.FindElement(_singInButton));
             }
-            catch (TimeoutException e)
+            catch (WebDriverTimeoutException e)
             {
-                throw new Exception(e.Message);
+                throw new WebDriverTimeoutException($"Page {nameof(LoginPage)} is not opened. Message : {e.Message}");
             }
 
             return this;
@@ -34,8 +34,27 @@ namespace PageObject.Pages
             WaitForPageOpened();
             return this;
         }
+        
+        public override bool IsPageOpened()
+        {
+            {
+                bool isOpened;
+                try
+                {
+                    Wait.Until(d => d.FindElement(_singInButton));
+                    isOpened = true;
+                }
+                catch (WebDriverTimeoutException e)
+                {
+                    isOpened = false;
+                }
 
-        public ProductsPage ClickSingInButton(string username, string password)
+                return isOpened;
+            }
+        }
+        
+
+        public ProductsPage LoginInApp(string username, string password)
         {
             Driver.FindElement(_usernameField).SendKeys(username);
             Driver.FindElement(_passwordField).SendKeys(password);

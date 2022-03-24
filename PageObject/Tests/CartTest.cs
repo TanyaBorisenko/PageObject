@@ -24,7 +24,7 @@ namespace PageObject.Tests
 
            var amount = LoginPage
                 .OpenPage()
-                .ClickSingInButton(UserName, Password)
+                .LoginInApp(UserName, Password)
                 .WaitForPageOpened()
                 .AddProduct("Sauce Labs Backpack")
                 .GetCartBadgeAmount();
@@ -38,7 +38,7 @@ namespace PageObject.Tests
         {
             var amount = LoginPage
                 .OpenPage()
-                .ClickSingInButton(UserName, Password)
+                .LoginInApp(UserName, Password)
                 .WaitForPageOpened()
                 .AddProduct("Sauce Labs Backpack")
                 .RemoveProduct("Sauce Labs Backpack")
@@ -49,16 +49,36 @@ namespace PageObject.Tests
 
         //Click "Continue" button
         [Test]
-        public void ContinueShoppingButton()
+        public void CheckContinueShoppingButton()
         {
-            CartMenu.ContinueShopping();
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .AddProduct("Sauce Labs Backpack")
+                .ClickCartButton()
+                .ContinueShopping()
+                .IsPageOpened();
+                
+            
+            Assert.IsTrue(result);
+
         }
 
         //Click "Checkout" button
         [Test]
-        public void ClickCheckoutButton()
+        public void CheckCheckoutButton()
         {
-            CartMenu.CheckoutButton();
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .AddProduct("Sauce Labs Backpack")
+                .ClickCartButton()
+                .CheckoutButton()
+                .IsPageOpened();
+            
+            Assert.IsTrue(result);
         }
     }
 }

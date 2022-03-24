@@ -10,9 +10,13 @@ namespace PageObject.Tests
         [Test]
         public void SortAtZaProductLabels()
         {
-            ProductsPage.GetSortedAtZaProductLabels();
-            var product = ProductsPage.GetSortedAtZaProductLabels().OrderByDescending(p => p);
-            Assert.That(product, Is.Ordered.Descending);
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .GetSortedAtZaProductLabels().OrderByDescending(p => p);
+
+            Assert.That(result, Is.Ordered.Descending);
 
         }
 
@@ -20,18 +24,24 @@ namespace PageObject.Tests
         [Test]
         public void SortAtAzProductLabels()
         {
-            ProductsPage.GetSortedAtAzProductLabels();
-            var product = ProductsPage.GetSortedAtAzProductLabels().OrderBy(p => p);
-            Assert.That(product, Is.Ordered);
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+            .GetSortedAtAzProductLabels().OrderBy(p => p);
+            Assert.That(result, Is.Ordered);
         }
 
         //Soring products by the selection of sort from Low price to High 
         [Test]
         public void SortAtLtoHProductLabels()
         {
-            ProductsPage.GetSortedAtLtoHProductLabels();
-            var product = ProductsPage.GetSortedAtLtoHProductLabels().OrderBy(p => p);
-            Assert.That(product, Is.Ordered);
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .GetSortedAtLtoHProductLabels().OrderBy(p => p);
+            Assert.That(result, Is.Ordered);
             
         }
 
@@ -39,9 +49,12 @@ namespace PageObject.Tests
         [Test]
         public void SortAtHtoLProductLabels()
         {
-            ProductsPage.GetSortedAtHtoLProductLabels();
-            var product = ProductsPage.GetSortedAtHtoLProductLabels().OrderByDescending(p => p);
-            Assert.That(product, Is.Ordered.Descending);
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .GetSortedAtHtoLProductLabels().OrderByDescending(p => p);
+            Assert.That(result, Is.Ordered.Descending);
         }
     }
 }
