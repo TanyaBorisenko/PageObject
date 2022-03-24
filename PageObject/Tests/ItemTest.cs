@@ -2,7 +2,7 @@
 
 namespace PageObject.Tests
 {
-    public class ItemTest:BaseTest
+    public class ItemTest : BaseTest
     {
         //Back to products menu
         [Test]
@@ -21,7 +21,7 @@ namespace PageObject.Tests
                 .WaitForPageOpened()
                 .ClickBackButton()
                 .IsPageOpened();
-            
+
             Assert.IsTrue(result);
         }
     }

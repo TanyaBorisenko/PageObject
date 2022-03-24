@@ -17,7 +17,7 @@ namespace PageObject.Tests
                 .CheckoutButton()
                 .InsertData("Tanya", "borisenko", "123445")
                 .IsPageOpened();
-            
+
             Assert.IsTrue(result);
         }
 
@@ -34,9 +34,8 @@ namespace PageObject.Tests
                 .CheckoutButton()
                 .InsertData(" ", "", "")
                 .IsPageOpened();
-            
+
             Assert.IsFalse(result);
-            
         }
 
         //Click Cancel button
@@ -52,7 +51,7 @@ namespace PageObject.Tests
                 .CheckoutButton()
                 .CancelButton()
                 .IsPageOpened();
-            
+
             Assert.IsTrue(result);
         }
     }

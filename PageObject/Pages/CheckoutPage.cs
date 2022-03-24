@@ -10,6 +10,7 @@ namespace PageObject.Pages
         private readonly By _firstNameInfo = By.Id("first-name");
         private readonly By _lastNameInfo = By.Id("last-name");
         private readonly By _postalCodeInfo = By.Id("postal-code");
+        private readonly By _title = By.XPath("//*[@class = 'title']");
 
         public CheckoutPage(IWebDriver driver) : base(driver)
         {
@@ -19,7 +20,7 @@ namespace PageObject.Pages
         {
             try
             {
-                Wait.Until(d => d.FindElement(By.XPath("//*[@class = 'title']")));
+                Wait.Until(d => d.FindElement(_title));
             }
             catch (WebDriverTimeoutException e)
             {
@@ -42,7 +43,7 @@ namespace PageObject.Pages
                 bool isOpened;
                 try
                 {
-                    Wait.Until(d => d.FindElement(By.XPath("//*[@class = 'title']")));
+                    Wait.Until(d => d.FindElement(_title));
                     isOpened = true;
                 }
                 catch (WebDriverTimeoutException e)

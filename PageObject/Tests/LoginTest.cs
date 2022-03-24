@@ -13,9 +13,8 @@ namespace PageObject.Tests
                 .LoginInApp(UserName, Password)
                 .WaitForPageOpened()
                 .IsPageOpened();
-            
-            Assert.IsTrue(result);
 
+            Assert.IsTrue(result);
         }
 
         //Fail login
@@ -23,11 +22,11 @@ namespace PageObject.Tests
         public void Login_EnterErrorPassword()
         {
             var result = LoginPage
-            .OpenPage()
+                .OpenPage()
                 .LoginInApp(UserName, " privet")
-            .WaitForPageOpened()
+                .WaitForPageOpened()
                 .IsPageOpened();
-            
+
             Assert.IsFalse(result);
         }
     }

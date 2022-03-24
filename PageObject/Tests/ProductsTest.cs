@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace PageObject.Tests
 {
@@ -14,10 +13,9 @@ namespace PageObject.Tests
                 .OpenPage()
                 .LoginInApp(UserName, Password)
                 .WaitForPageOpened()
-                .GetSortedAtZaProductLabels().OrderByDescending(p => p);
+                .GetSortedAtZaProductLabels();
 
             Assert.That(result, Is.Ordered.Descending);
-
         }
 
         //Sorting products by the selection of sort from A to Z
@@ -28,7 +26,7 @@ namespace PageObject.Tests
                 .OpenPage()
                 .LoginInApp(UserName, Password)
                 .WaitForPageOpened()
-            .GetSortedAtAzProductLabels().OrderBy(p => p);
+                .GetSortedAtAzProductLabels();
             Assert.That(result, Is.Ordered);
         }
 
@@ -40,9 +38,8 @@ namespace PageObject.Tests
                 .OpenPage()
                 .LoginInApp(UserName, Password)
                 .WaitForPageOpened()
-                .GetSortedAtLtoHProductLabels().OrderBy(p => p);
+                .GetSortedAtLtoHProductLabels();
             Assert.That(result, Is.Ordered);
-            
         }
 
         // Sorting products by the selection of sort from High price to Low
@@ -53,7 +50,7 @@ namespace PageObject.Tests
                 .OpenPage()
                 .LoginInApp(UserName, Password)
                 .WaitForPageOpened()
-                .GetSortedAtHtoLProductLabels().OrderByDescending(p => p);
+                .GetSortedAtHtoLProductLabels();
             Assert.That(result, Is.Ordered.Descending);
         }
     }

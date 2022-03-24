@@ -28,6 +28,7 @@ namespace PageObject.Pages
 
         public override ItemPage OpenPage()
         {
+            Driver.Navigate().GoToUrl(Url + "/inventory-item.html");
             WaitForPageOpened();
             return this;
         }

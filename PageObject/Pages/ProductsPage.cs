@@ -18,6 +18,7 @@ namespace PageObject.Pages
         private readonly By _facebookButton = By.ClassName("social_facebook");
         private readonly By _linkedinButton = By.ClassName("social_linkedin");
         private readonly By _cartBadgeIcon = By.ClassName("shopping_cart_badge");
+        private readonly By _title = By.ClassName("app_logo");
         private readonly By _productPrice = By.CssSelector("[class = 'inventory_item_price']");
         private readonly By _sortFromZtoA =
             By.XPath("//*[@class = 'product_sort_container']//following::*[@value = 'za']");
@@ -36,7 +37,7 @@ namespace PageObject.Pages
         {
             try
             {
-                Wait.Until(d => d.FindElement(By.ClassName("app_logo")));
+                Wait.Until(d => d.FindElement(_title));
             }
             catch (WebDriverTimeoutException e)
             {
@@ -173,10 +174,8 @@ namespace PageObject.Pages
         public IList<string> GetSortedAtLtoHProductLabels()
         {
             Driver.FindElement(_sortContainer).Click();
-            Driver.FindElement(_sortFromLpriceToH)
-                .Click();
-            var products = Driver.FindElements(_productPrice).Select(e => e.Text)
-                .ToList();
+            Driver.FindElement(_sortFromLpriceToH).Click();
+            var products = Driver.FindElements(_productPrice).Select(e => e.Text).ToList();
 
             return products;
         }
@@ -184,10 +183,9 @@ namespace PageObject.Pages
         public IList<string> GetSortedAtHtoLProductLabels()
         {
             Driver.FindElement(_sortContainer).Click();
-            Driver.FindElement(_sortFromHpriceToL)
-                .Click();
-            var products = Driver.FindElements(_productPrice).Select(e => e.Text)
-                .ToList();
+            Driver.FindElement(_sortFromHpriceToL).Click();
+            var products = Driver.FindElements(_productPrice).Select(e => e.Text).ToList();
+            
 
             return products;
         }

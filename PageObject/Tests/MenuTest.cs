@@ -2,7 +2,7 @@
 
 namespace PageObject.Tests
 {
-    public class MenuTest:BaseTest
+    public class MenuTest : BaseTest
     {
         //Click "Close" button 
         [Test]
@@ -16,9 +16,10 @@ namespace PageObject.Tests
                 .WaitForPageOpened()
                 .CloseButton()
                 .IsPageOpened();
-            
+
             Assert.IsTrue(result);
         }
+
         //Check Logout Button
         [Test]
         public void ClickLogoutButtonOnMenuPage()
@@ -31,7 +32,7 @@ namespace PageObject.Tests
                 .WaitForPageOpened()
                 .LogOutButton()
                 .IsPageOpened();
-            
+
             Assert.IsTrue(result);
         }
     }
