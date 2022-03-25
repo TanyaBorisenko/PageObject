@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using OpenQA.Selenium;
 
@@ -14,11 +13,21 @@ namespace PageObject.Pages
         private readonly string _removeButton = "//*[@class='inventory_item']//*[text()='Remove']";
         private readonly By _nameProduct = By.CssSelector("[class = 'inventory_item_name']");
         private readonly By _productDescription = By.CssSelector("[class = 'inventory_item_desc']");
-        string _productImg = "//div[@class ='inventory_item_img']";
+        private readonly string _productImg = "//div[@class ='inventory_item_img']";
         private readonly By _twitterButton = By.ClassName("social_twitter");
         private readonly By _facebookButton = By.ClassName("social_facebook");
         private readonly By _linkedinButton = By.ClassName("social_linkedin");
         private readonly By _cartBadgeIcon = By.ClassName("shopping_cart_badge");
+        private readonly By _title = By.ClassName("app_logo");
+        private readonly By _productPrice = By.CssSelector("[class = 'inventory_item_price']");
+        private readonly By _sortFromZtoA =
+            By.XPath("//*[@class = 'product_sort_container']//following::*[@value = 'za']");
+        private readonly By _sortFromAtoZ =
+            By.XPath("//*[@class = 'product_sort_container']//following::*[@value = 'az']");
+        private readonly By _sortFromHpriceToL =
+            By.XPath("//*[@class = 'product_sort_container']//following::*[@value = 'hilo']");
+        private readonly By _sortFromLpriceToH =
+            By.XPath("//*[@class = 'product_sort_container']//following::*[@value = 'lohi']");
 
         public ProductsPage(IWebDriver driver) : base(driver)
         {
@@ -28,11 +37,12 @@ namespace PageObject.Pages
         {
             try
             {
-                Wait.Until(d => d.FindElement(By.ClassName("app_logo")));
+                Wait.Until(d => d.FindElement(_title));
             }
-            catch (TimeoutException e)
+            catch (WebDriverTimeoutException e)
             {
-                throw new Exception(e.Message);
+                throw new WebDriverTimeoutException(
+                    $"Page {nameof(ProductsPage)} is not opened. Message : {e.Message}");
             }
 
             return this;
@@ -43,6 +53,24 @@ namespace PageObject.Pages
             Driver.Navigate().GoToUrl(Url + "/inventory.html");
             WaitForPageOpened();
             return this;
+        }
+
+        public override bool IsPageOpened()
+        {
+            {
+                bool isOpened;
+                try
+                {
+                    Wait.Until(d => d.FindElement(By.ClassName("app_logo")));
+                    isOpened = true;
+                }
+                catch (WebDriverTimeoutException e)
+                {
+                    isOpened = false;
+                }
+
+                return isOpened;
+            }
         }
 
         public ProductsPage AddProduct(string product)
@@ -113,10 +141,10 @@ namespace PageObject.Pages
             }
         }
 
-        public MenuButton ClickMenuButton()
+        public MenuPage ClickMenuButton()
         {
             Driver.FindElement(_menuButton).Click();
-            return new MenuButton(Driver);
+            return new MenuPage(Driver);
         }
 
         public CartMenu ClickCartButton()
@@ -128,7 +156,7 @@ namespace PageObject.Pages
         public IList<string> GetSortedAtZaProductLabels()
         {
             Driver.FindElement(_sortContainer).Click();
-            Driver.FindElement(By.XPath("//*[@class = 'product_sort_container']//following::*[@value = 'za']")).Click();
+            Driver.FindElement(_sortFromZtoA).Click();
             var products = Driver.FindElements(_nameProduct).Select(e => e.Text).ToList();
 
             return products;
@@ -137,7 +165,7 @@ namespace PageObject.Pages
         public IList<string> GetSortedAtAzProductLabels()
         {
             Driver.FindElement(_sortContainer).Click();
-            Driver.FindElement(By.XPath("//*[@class = 'product_sort_container']//following::*[@value = 'az']")).Click();
+            Driver.FindElement(_sortFromAtoZ).Click();
             var products = Driver.FindElements(_nameProduct).Select(e => e.Text).ToList();
 
             return products;
@@ -146,10 +174,8 @@ namespace PageObject.Pages
         public IList<string> GetSortedAtLtoHProductLabels()
         {
             Driver.FindElement(_sortContainer).Click();
-            Driver.FindElement(By.XPath("//*[@class = 'product_sort_container']//following::*[@value = 'lohi']"))
-                .Click();
-            var products = Driver.FindElements(By.CssSelector("[class = 'inventory_item_price']")).Select(e => e.Text)
-                .ToList();
+            Driver.FindElement(_sortFromLpriceToH).Click();
+            var products = Driver.FindElements(_productPrice).Select(e => e.Text).ToList();
 
             return products;
         }
@@ -157,10 +183,9 @@ namespace PageObject.Pages
         public IList<string> GetSortedAtHtoLProductLabels()
         {
             Driver.FindElement(_sortContainer).Click();
-            Driver.FindElement(By.XPath("//*[@class = 'product_sort_container']//following::*[@value = 'hilo']"))
-                .Click();
-            var products = Driver.FindElements(By.CssSelector("[class = 'inventory_item_price']")).Select(e => e.Text)
-                .ToList();
+            Driver.FindElement(_sortFromHpriceToL).Click();
+            var products = Driver.FindElements(_productPrice).Select(e => e.Text).ToList();
+            
 
             return products;
         }

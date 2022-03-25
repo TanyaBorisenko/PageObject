@@ -19,5 +19,7 @@ namespace PageObject.Pages
         public abstract T WaitForPageOpened();
 
         public abstract T OpenPage();
+
+        public abstract bool IsPageOpened();
     }
 }

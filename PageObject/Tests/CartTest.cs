@@ -7,29 +7,14 @@ namespace PageObject.Tests
         [Test]
         public void AddProductIntoTheCart_IconCartShouldShowAddedProduct_OnTheProductPage()
         {
-            // // Open Sauce Demo Login Page
-            // LoginPage.OpenPage();
-            //
-            // // Login
-            // LoginPage.ClickSingInButton(UserName, Password);
-            //
-            // // I am in Product Page
-            // ProductsPage.WaitForPageOpened();
-            //
-            // // Add product
-            // ProductsPage.AddProduct("Sauce Labs Backpack");
-            //
-            // // Get amount from cart badge
-            // var amount = ProductsPage.GetCartBadgeAmount();
-
-           var amount = LoginPage
+            var amount = LoginPage
                 .OpenPage()
-                .ClickSingInButton(UserName, Password)
+                .LoginInApp(UserName, Password)
                 .WaitForPageOpened()
                 .AddProduct("Sauce Labs Backpack")
                 .GetCartBadgeAmount();
 
-           Assert.AreEqual(1, amount);
+            Assert.AreEqual(1, amount);
         }
 
         //Remove product from the cart
@@ -38,7 +23,7 @@ namespace PageObject.Tests
         {
             var amount = LoginPage
                 .OpenPage()
-                .ClickSingInButton(UserName, Password)
+                .LoginInApp(UserName, Password)
                 .WaitForPageOpened()
                 .AddProduct("Sauce Labs Backpack")
                 .RemoveProduct("Sauce Labs Backpack")
@@ -49,16 +34,34 @@ namespace PageObject.Tests
 
         //Click "Continue" button
         [Test]
-        public void ContinueShoppingButton()
+        public void CheckContinueShoppingButton()
         {
-            CartMenu.ContinueShopping();
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .AddProduct("Sauce Labs Backpack")
+                .ClickCartButton()
+                .ContinueShopping()
+                .IsPageOpened();
+
+            Assert.IsTrue(result);
         }
 
         //Click "Checkout" button
         [Test]
-        public void ClickCheckoutButton()
+        public void CheckCheckoutButton()
         {
-            CartMenu.CheckoutButton();
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .AddProduct("Sauce Labs Backpack")
+                .ClickCartButton()
+                .CheckoutButton()
+                .IsPageOpened();
+
+            Assert.IsTrue(result);
         }
     }
 }

@@ -6,23 +6,53 @@ namespace PageObject.Tests
     {
         //Enter all data correctly
         [Test]
-        public void EnterValidData()
+        public void EnterValidDataOnCheckoutPage()
         {
-            CheckoutPage.InsertData("Tanya", "borisenko", "123445");
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .AddProduct("Sauce Labs Backpack")
+                .ClickCartButton()
+                .CheckoutButton()
+                .InsertData("Tanya", "borisenko", "123445")
+                .IsPageOpened();
+
+            Assert.IsTrue(result);
         }
 
         //Checking operation with empty slings
         [Test]
-        public void EmptyData()
+        public void EnterEmptyDataOnCheckoutPage()
         {
-            CheckoutPage.InsertData(" ", "", "");
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .AddProduct("Sauce Labs Backpack")
+                .ClickCartButton()
+                .CheckoutButton()
+                .InsertData(" ", "", "")
+                .IsPageOpened();
+
+            Assert.IsFalse(result);
         }
 
         //Click Cancel button
         [Test]
-        public void ReturnToProductPage()
+        public void ReturnToCartPage()
         {
-            CheckoutPage.CancelButton();
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .AddProduct("Sauce Labs Backpack")
+                .ClickCartButton()
+                .CheckoutButton()
+                .CancelButton()
+                .IsPageOpened();
+
+            Assert.IsTrue(result);
         }
     }
 }

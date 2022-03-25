@@ -9,15 +9,15 @@ namespace PageObject.Tests
     {
         private WebDriver _driver;
         protected string UserName = "standard_user";
-        public string Password = "secret_sauce";
-        public CartMenu CartMenu;
-        public CheckoutPage CheckoutPage;
-        public FinishPage FinishPage;
-        public ItemPage ItemPage;
-        public LoginPage LoginPage;
-        public ProductsPage ProductsPage;
-        public MenuButton MenuButton;
-        public OverviewPage OverviewPage;
+        protected string Password = "secret_sauce";
+        protected CartMenu CartMenu;
+        protected CheckoutPage CheckoutPage;
+        protected FinishPage FinishPage;
+        protected ItemPage ItemPage;
+        protected LoginPage LoginPage;
+        protected ProductsPage ProductsPage;
+        protected MenuPage MenuPage;
+        protected OverviewPage OverviewPage;
 
         [SetUp]
         public void BeforeTest()
@@ -31,7 +31,7 @@ namespace PageObject.Tests
             ItemPage = new ItemPage(_driver);
             LoginPage = new LoginPage(_driver);
             ProductsPage = new ProductsPage(_driver);
-            MenuButton = new MenuButton(_driver);
+            MenuPage = new MenuPage(_driver);
             OverviewPage = new OverviewPage(_driver);
         }
 
@@ -40,7 +40,5 @@ namespace PageObject.Tests
         {
             _driver.Quit();
         }
-        
-        // tanya govnokoder, ia pzdc bydy rjat esli ona etogo ne zametit
     }
 }

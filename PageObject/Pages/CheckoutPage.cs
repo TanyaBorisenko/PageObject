@@ -10,6 +10,7 @@ namespace PageObject.Pages
         private readonly By _firstNameInfo = By.Id("first-name");
         private readonly By _lastNameInfo = By.Id("last-name");
         private readonly By _postalCodeInfo = By.Id("postal-code");
+        private readonly By _title = By.XPath("//*[@class = 'title']");
 
         public CheckoutPage(IWebDriver driver) : base(driver)
         {
@@ -19,11 +20,11 @@ namespace PageObject.Pages
         {
             try
             {
-                Wait.Until(d => d.FindElement(By.XPath("//*[@class = 'title']")));
+                Wait.Until(d => d.FindElement(_title));
             }
-            catch (TimeoutException e)
+            catch (WebDriverTimeoutException e)
             {
-                throw new Exception(e.Message);
+                throw new WebDriverTimeoutException($"Page {nameof(CheckoutPage)} is not opened. Message : {e.Message}");
             }
 
             return this;
@@ -36,13 +37,31 @@ namespace PageObject.Pages
             return this;
         }
 
-        public CheckoutPage InsertData(string firstName, string lastname, string zipCode)
+        public override bool IsPageOpened()
+        {
+            {
+                bool isOpened;
+                try
+                {
+                    Wait.Until(d => d.FindElement(_title));
+                    isOpened = true;
+                }
+                catch (WebDriverTimeoutException e)
+                {
+                    isOpened = false;
+                }
+
+                return isOpened;
+            }
+        }
+
+        public OverviewPage InsertData(string firstName, string lastname, string zipCode)
         {
             Driver.FindElement(_firstNameInfo).SendKeys(firstName);
             Driver.FindElement(_lastNameInfo).SendKeys(lastname);
             Driver.FindElement(_postalCodeInfo).SendKeys(zipCode);
             Driver.FindElement(_continueButton).Click();
-            return this;
+            return new OverviewPage(Driver);
         }
 
         public CartMenu CancelButton()

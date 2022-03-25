@@ -6,16 +6,28 @@ namespace PageObject.Tests
     {
         //Login in app
         [Test]
-        public void OpenProductsPage()
+        public void LoginAndOpenProductsPage()
         {
-            LoginPage.ClickSingInButton(UserName, Password);
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .IsPageOpened();
+
+            Assert.IsTrue(result);
         }
 
         //Fail login
         [Test]
-        public void EnterErrorPassword()
+        public void Login_EnterErrorPassword()
         {
-            LoginPage.ClickSingInButton(UserName, " ghypo ");
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, " privet")
+                .WaitForPageOpened()
+                .IsPageOpened();
+
+            Assert.IsFalse(result);
         }
     }
 }

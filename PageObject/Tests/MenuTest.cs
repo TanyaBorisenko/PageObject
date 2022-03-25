@@ -2,19 +2,38 @@
 
 namespace PageObject.Tests
 {
-    public class MenuTest:BaseTest
+    public class MenuTest : BaseTest
     {
         //Click "Close" button 
         [Test]
-        public void CloseMenu()
+        public void OpenAndCloseMenuPage()
         {
-            MenuButton.CloseButton();
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .ClickMenuButton()
+                .WaitForPageOpened()
+                .CloseButton()
+                .IsPageOpened();
+
+            Assert.IsTrue(result);
         }
+
         //Check Logout Button
         [Test]
-        public void ClickLogoutButton()
+        public void ClickLogoutButtonOnMenuPage()
         {
-            MenuButton.LogOutButton();
+            var result = LoginPage
+                .OpenPage()
+                .LoginInApp(UserName, Password)
+                .WaitForPageOpened()
+                .ClickMenuButton()
+                .WaitForPageOpened()
+                .LogOutButton()
+                .IsPageOpened();
+
+            Assert.IsTrue(result);
         }
     }
 }

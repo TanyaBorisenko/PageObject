@@ -34,6 +34,24 @@ namespace PageObject.Pages
             return this;
         }
 
+        public override bool IsPageOpened()
+        {
+            {
+                bool isOpened;
+                try
+                {
+                    Wait.Until(d => d.FindElement(_headerLabel));
+                    isOpened = true;
+                }
+                catch (WebDriverTimeoutException e)
+                {
+                    isOpened = false;
+                }
+
+                return isOpened;
+            }
+        }
+
         public ProductsPage ContinueShopping()
         {
             Driver.FindElement(_continueShoppingButton).Click();
