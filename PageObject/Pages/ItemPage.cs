@@ -51,15 +51,17 @@ namespace PageObject.Pages
             }
         }
 
-        public ItemPage ClickBackButton()
+        public ProductsPage ClickBackButton()
         {
             Driver.FindElement(_backButton).Click();
-            return this;
+            return new ProductsPage(Driver);
         }
 
-        public string GetItem()
+        public ItemPage GetItem()
         {
-            return Driver.FindElement(_detailsContainer).Text;
+            Driver.FindElement(_detailsContainer);
+            
+            return this;
         }
     }
 }

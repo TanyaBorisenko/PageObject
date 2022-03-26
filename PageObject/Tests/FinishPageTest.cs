@@ -2,19 +2,23 @@
 
 namespace PageObject.Tests
 {
-    public class ItemTest : BaseTest
+    public class FinishPageTest : BaseTest
     {
-        // CheckProductDescription
+        //Back to products menu
         [Test]
-        public void CheckProductDescriptionIsDisplayed()
+        public void AfterFinishBackToProductsMenu()
         {
             var result = LoginPage
                 .OpenPage()
                 .LoginInApp(UserName, Password)
                 .WaitForPageOpened()
-                .ClickOnImg("Sauce Labs Backpack")
+                .AddProduct("Sauce Labs Backpack")
+                .ClickCartButton()
+                .CheckoutButton()
+                .InsertData("Tanya", "borisenko", "123445")
                 .WaitForPageOpened()
-                .GetItem()
+                .ClickFinishButton()
+                .WaitForPageOpened()
                 .ClickBackButton()
                 .IsPageOpened();
 
